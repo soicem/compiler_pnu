@@ -4,5 +4,4 @@
 [link keyword][id]
 [id]: URL "Optional Title here"
 
-Link: [Google][googlelink]
-[googlelink]: https://github.com/meyerd/flex-bison-example "calculator example"
+[link]: https://github.com/meyerd/flex-bison-example "calculator example"
