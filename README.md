@@ -1,4 +1,11 @@
 # compiler_pnu
+
+> special features
+>> 1. lambda
+>> 2. generator
+>> 3. power
+>> 4. yield
+
 > reserved schedule
 >> 1. build ast until sunday(18 nov 25) x
 >> 2. assignment [the guideline of the compiler term project due dec3](http://soicem.tistory.com/251)
