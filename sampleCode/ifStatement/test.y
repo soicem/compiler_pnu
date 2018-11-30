@@ -3,7 +3,7 @@
  #include<stdlib.h>  
  int yyerror(const char* s), yylex();
 %}  
-%token num alpha LT GT EQ LE GE NE AND OR INC DEC  
+%token num alpha LT GT EQ LE GE NE AND OR INC DEC END  
 %left '+''-'  
 %left '*''/'  
 %right '^'  
@@ -14,7 +14,7 @@
 %left GE NE LT GT LE EQ  
 %left AND OR  
 %%  
-S:ST{printf("\n Accepted\n");exit(0);}  
+S:ST END{printf("\n Accepted\n");exit(0);}  
 ST:IF'('F')''{'ST'}'%prec IF  
  |IF'('F')''{'ST'}'ELSE'{'ST'}'  
  |E';'  

@@ -16,7 +16,8 @@
 "--" {return DEC;}  
 "==" {return EQ;}  
 [0-9]+ {return num;}  
-[a-zA-Z]+ {return alpha;}  
+[a-zA-Z]+ {return alpha;}
+"$"	{return END;}  
 [\t];  
 [\n];   
 .   {return yytext[0];}  

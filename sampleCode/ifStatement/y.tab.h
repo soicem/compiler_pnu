@@ -57,9 +57,10 @@ extern int yydebug;
     OR = 267,
     INC = 268,
     DEC = 269,
-    UMINUS = 270,
-    IF = 271,
-    ELSE = 272
+    END = 270,
+    UMINUS = 271,
+    IF = 272,
+    ELSE = 273
   };
 #endif
 /* Tokens.  */
@@ -75,9 +76,10 @@ extern int yydebug;
 #define OR 267
 #define INC 268
 #define DEC 269
-#define UMINUS 270
-#define IF 271
-#define ELSE 272
+#define END 270
+#define UMINUS 271
+#define IF 272
+#define ELSE 273
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
