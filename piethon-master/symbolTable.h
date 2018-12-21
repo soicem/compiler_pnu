@@ -3,18 +3,18 @@
 
 #include <map>
 #include <string>
-#include "number.h"
+#include "Node.h"
 
 using std::map;
 using std::string;
 
 class SymbolTable {
 public:
-   Number  operator[](const string&) const;
-   Number& operator[](const string&);
+   NODE  operator[](const string&) const;
+   NODE& operator[](const string&);
 
 private:
-   map<string,Number> symTable;
+   map<string,NODE> symTable;
 };
 
 #endif

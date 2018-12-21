@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "exception.h"
-#include "number.h"
+#include "Node.h"
 #include "symbolTable.h"
 #include "functionTable.h"
 #include "expression.h"
@@ -77,8 +77,8 @@ Print::~Print() {
 }
 
 void Print::eval(SymbolTable& st, FunctionTable& ft) const {
-   Number n(exp->eval(st, ft));
-   cout << ">> " << n << endl;
+   NODE node(exp->eval(st, ft));
+   cout << ">> " << node << endl;
 }
 
 Return::~Return() {

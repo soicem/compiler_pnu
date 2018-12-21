@@ -1,15 +1,15 @@
 x = 1
 
-func printGlobalX():
+def printGlobalX():
     print x
 end
 
-func printLocalX():
+def printLocalX():
     x = 2
     print x
 end
 
-func printArgX(x):
+def printArgX(x):
     print x
 end
 

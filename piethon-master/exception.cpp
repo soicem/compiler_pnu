@@ -12,7 +12,7 @@ const char* ReturnValue::what() const throw() {
    return "a function returned a value (no error occurred)";
 }
 
-Number ReturnValue::getValue() const {
+NODE ReturnValue::getValue() const {
    return value;
 }
 

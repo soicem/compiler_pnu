@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 LEX = flex
 YACC = bison -d
 CXXFLAGS = -Wall -Wextra -pedantic

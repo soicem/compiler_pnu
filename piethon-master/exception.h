@@ -1,7 +1,7 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include "number.h"
+#include "Node.h"
 
 extern int yylineno;
 
@@ -67,14 +67,14 @@ public:
 
 class ReturnValue {
 public:
-   ReturnValue(const Number& num, int line) : value(num), lineNumber(line) { }
+   ReturnValue(const NODE& num, int line) : value(num), lineNumber(line) { }
    
    const char* what() const throw();
-   Number getValue() const;
+   NODE getValue() const;
    int getLineNumber() const;
 
 private:
-   Number value;
+   NODE value;
    int    lineNumber;
 };
 
