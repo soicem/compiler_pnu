@@ -12,6 +12,7 @@ class SymbolTable {
 public:
    NODE  operator[](const string&) const;
    NODE& operator[](const string&);
+   int getCountKey(string s);
 
 private:
    map<string,NODE> symTable;

@@ -14,4 +14,6 @@ NODE& SymbolTable::operator[](const string& ident) {
    // return reference to entry in symTable
    return symTable[ident];
 }
-
+int SymbolTable::getCountKey(string s){
+   return symTable.count(s);
+}

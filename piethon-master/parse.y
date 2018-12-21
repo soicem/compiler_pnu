@@ -64,6 +64,7 @@ void yyerror(const char* s, char c) {
 %token WHILE   "while"
 %token DEF     "def"
 %token PRINT   "print"
+%token COME    "come"
 %token RETURN  "return"
 %token END     "end"
 
@@ -79,6 +80,7 @@ void yyerror(const char* s, char c) {
 %type<stmt>      statement
 %type<stmt>      assignment
 %type<stmt>      print
+%type<stmt>	 come
 %type<stmt>      function_def
 %type<stmt>      function_call
 %type<stmt>      if_else
@@ -102,6 +104,7 @@ statement_list  : statement_list statement
 
 statement       : assignment
                 | print
+		| come
                 | function_def
                 | if_else
                 | while
@@ -158,6 +161,9 @@ assignment      : IDENT '=' expression
 print           : PRINT expression
                      { $$ = new Print($2); }
                 ;
+come		: COME '(' IDENT ')' {$$ = new Come($3);}
+
+		;
 
 function_def    : DEF IDENT '(' parameter_list ')' ':' statement_list END
                      { $$ = new FunctionDef($2, new Function($4, $7));
