@@ -1,7 +1,7 @@
 #include "exception.h"
 #include "symbolTable.h"
 
-Number SymbolTable::operator[](const string& ident) const {
+NODE SymbolTable::operator[](const string& ident) const {
    // ensure variable is defined 
    if (symTable.count(ident) == 0) {
       throw UnboundIdentifier();
@@ -10,7 +10,7 @@ Number SymbolTable::operator[](const string& ident) const {
    return symTable.find(ident)->second;
 }
 
-Number& SymbolTable::operator[](const string& ident) {
+NODE& SymbolTable::operator[](const string& ident) {
    // return reference to entry in symTable
    return symTable[ident];
 }
