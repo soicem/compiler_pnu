@@ -62,11 +62,14 @@ void yyerror(const char* s, char c) {
 %token DS      "\""
 %token ELSE    "else"
 %token WHILE   "while"
+%token FOR     "for"
 %token DEF     "def"
 %token PRINT   "print"
 %token COME    "come"
 %token RETURN  "return"
 %token END     "end"
+%token DOTDOT  ".."
+%token IN      "in"
 
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
@@ -85,6 +88,7 @@ void yyerror(const char* s, char c) {
 %type<stmt>      function_call
 %type<stmt>      if_else
 %type<stmt>      while
+%type<stmt>      for
 %type<stmt>      return
 %type<stmtList>  statement_list
 %type<paramList> parameter_list
@@ -108,6 +112,7 @@ statement       : assignment
                 | function_def
                 | if_else
                 | while
+		| for
                 | return
                 | function_call
                 ;
@@ -207,6 +212,12 @@ while           : WHILE expression ':' statement_list END
                      { $$ = new While($2, $4); }
                 | WHILE expression ':' END
                      { $$ = new While($2, new StatementList()); }
+                ;
+
+for             : FOR IDENT IN INTNUM DOTDOT INTNUM ':' statement_list END
+                     { $$ = new For($2, $4, $6, $8); }
+                | FOR IDENT IN INTNUM DOTDOT INTNUM ':' END
+                     { $$ = new For($2, $4, $6, new StatementList()); }
                 ;
 
 return          : RETURN expression

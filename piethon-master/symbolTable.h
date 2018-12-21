@@ -12,6 +12,7 @@ class SymbolTable {
 public:
    NODE  operator[](const string&) const;
    NODE& operator[](const string&);
+   void setKeyWithV(string s, int v);
    int getCountKey(string s);
 
 private:

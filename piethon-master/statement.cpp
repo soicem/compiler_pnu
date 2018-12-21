@@ -8,6 +8,7 @@
 #include "function.h"
 #include "exception.h"
 #include "statement.h"
+#include <map>
 
 using std::cout;
 using std::cin;
@@ -69,6 +70,17 @@ While::~While() {
 
 void While::eval(SymbolTable& st, FunctionTable& ft) const {
    while (condition->eval(st, ft) > 0) {
+      stmtList->eval(st, ft);
+   }
+}
+
+For::~For() {
+   delete stmtList;
+}
+
+void For::eval(SymbolTable& st, FunctionTable& ft) const {
+   for(int i = startIdx; i < finishIdx; i++) {
+      st.setKeyWithV(nameOfX,i);
       stmtList->eval(st, ft);
    }
 }
