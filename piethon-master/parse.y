@@ -46,6 +46,8 @@ void yyerror(const char* s, char c) {
 %token<intVal>   INTNUM    "int"
 %token<floatVal> FLOATNUM  "float"
 %token<ident>    IDENT     "identier"
+%token LMS      LM
+%token RMS      RM
 %token PLUSEQ  "+="
 %token MINUSEQ "-="
 %token MULTEQ  "*="
@@ -62,10 +64,11 @@ void yyerror(const char* s, char c) {
 %token DS      "\""
 %token ELSE    "else"
 %token WHILE   "while"
-%token DEF     "def"
 %token PRINT   "print"
 %token RETURN  "return"
 %token END     "end"
+%token FUNC    "func"
+%token CLASS   "class"
 
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
@@ -73,67 +76,69 @@ void yyerror(const char* s, char c) {
 %left '+' '-'
 %left '*' '/' '%' '^'
 %nonassoc UMINUS UFACTO
+%nonassoc Arr
 
-%type<exp>       expression
-%type<exp>       func_call_exp
-%type<stmt>      statement
-%type<stmt>      assignment
-%type<stmt>      print
-%type<stmt>      function_def
-%type<stmt>      function_call
-%type<stmt>      if_else
-%type<stmt>      while
-%type<stmt>      return
-%type<stmtList>  statement_list
-%type<paramList> parameter_list
-%type<expList>   expression_list
+%type<exp>       _EXPRESSION
+%type<exp>       _FUNC_CALL_EXP
+%type<stmt>      _STATEMENT
+%type<stmt>      _ASSIGNMENT
+%type<stmt>      _PRINT
+%type<stmt>      _FUNCTION_DEF
+%type<stmt>      _FUNCTION_CALL
+%type<stmt>      _IF_ELSE
+%type<stmt>      _WHILE
+%type<stmt>      _RETURN
+%type<stmtList>  _STATEMENT_LIST
+%type<paramList> _PARAMETER_LIST
+%type<expList>   _EXPRESSION_LIST
 
 %%
-program         : /* empty */
-                | statement_list 
-                     { Program($1).eval(); }
+Superior        : /* empty */
+                | _STATEMENT_LIST
+                { Program($1).eval(); }
                 ;
 
-statement_list  : statement_list statement
+_STATEMENT_LIST  : _STATEMENT_LIST _STATEMENT
                      { $1->add($2); $$ = $1; }
-                | statement 
+                | _STATEMENT
                      { StatementList* sl = new StatementList; sl->add($1); $$ = sl; }
                 ;
 
-statement       : assignment
-                | print
-                | function_def
-                | if_else
-                | while
-                | return
-                | function_call
+_STATEMENT       : _ASSIGNMENT
+                | _PRINT
+                | _FUNCTION_DEF
+                | _CLASS_DEF
+                | _IF_ELSE
+                | _WHILE
+                | _RETURN
+                | _FUNCTION_CALL
                 ;
 
-assignment      : IDENT '=' expression
+_ASSIGNMENT      : IDENT '=' _EXPRESSION
                      { $$ = new Assignment($1, $3);
                        delete [] $1;
                      }
-                | IDENT PLUSEQ expression
+                | IDENT PLUSEQ _EXPRESSION
                      { $$ = new Assignment($1, new Addition(new Identifier($1), $3));
                        delete [] $1;
                      }
-                | IDENT MINUSEQ expression
+                | IDENT MINUSEQ _EXPRESSION
                      { $$ = new Assignment($1, new Subtraction(new Identifier($1), $3));
                        delete [] $1;
                      }
-                | IDENT MULTEQ expression
+                | IDENT MULTEQ _EXPRESSION
                      { $$ = new Assignment($1, new Multiplication(new Identifier($1), $3));
                        delete [] $1;
                      }
-                | IDENT DIVEQ expression
+                | IDENT DIVEQ _EXPRESSION
                      { $$ = new Assignment($1, new Division(new Identifier($1), $3));
                        delete [] $1;
                      }
-                | IDENT MODEQ expression
+                | IDENT MODEQ _EXPRESSION
                      { $$ = new Assignment($1, new Modulus(new Identifier($1), $3));
                        delete [] $1;
                      }
-                | IDENT POWEQ expression
+                | IDENT POWEQ _EXPRESSION
                      { $$ = new Assignment($1, new Exponent(new Identifier($1), $3));
                        delete [] $1;
                      }
@@ -155,59 +160,66 @@ assignment      : IDENT '=' expression
                      } 
                 ;
 
-print           : PRINT expression
+_PRINT           : PRINT _EXPRESSION
                      { $$ = new Print($2); }
                 ;
 
-function_def    : DEF IDENT '(' parameter_list ')' ':' statement_list END
+
+
+
+_FUNCTION_DEF    : FUNC IDENT '(' _PARAMETER_LIST ')' ':' _STATEMENT_LIST END
                      { $$ = new FunctionDef($2, new Function($4, $7));
                        delete [] $2;
                      }
-                | DEF IDENT '(' parameter_list ')' ':' END
+                | FUNC IDENT '(' _PARAMETER_LIST ')' ':' END
                      { $$ = new FunctionDef($2, new Function($4, new StatementList()));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' statement_list END
+                | FUNC IDENT '(' ')' ':' _STATEMENT_LIST END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), $6));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' END
+                | FUNC IDENT '(' ')' ':' END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), new StatementList()));
                        delete [] $2;
                      }
                 ;
 
-function_call   : IDENT '(' expression_list ')'
+_FUNCTION_CALL   : IDENT '(' _EXPRESSION_LIST ')'
                      { $$ = new FunctionCall($1, $3);
                        delete [] $1;
                      }
                    ;
 
-if_else         : IF expression ':' statement_list ELSE ':' statement_list END
+
+_CLASS_DEF      : CLASS IDENT '{' _EXPRESSION_LIST '}' {  }
+                ;
+
+_IF_ELSE         : IF _EXPRESSION ':' _STATEMENT_LIST ELSE ':' _STATEMENT_LIST END
                      { $$ = new IfElse($2, $4, $7); }
-                | IF expression ':' ELSE ':' statement_list END
+                | IF _EXPRESSION ':' ELSE ':' _STATEMENT_LIST END
                      { $$ = new IfElse($2, new StatementList(), $6); }
-                | IF expression ':' statement_list ELSE ':' END
+                | IF _EXPRESSION ':' _STATEMENT_LIST ELSE ':' END
                      { $$ = new IfElse($2, $4, new StatementList()); }
-                | IF expression ':' ELSE ':' END
+                | IF _EXPRESSION ':' ELSE ':' END
                      { $$ = new IfElse($2, new StatementList(), new StatementList()); }
-                | IF expression ':' statement_list END
+                | IF _EXPRESSION ':' _STATEMENT_LIST END
                      { $$ = new IfElse($2, $4); }
-                | IF expression ':' END
+                | IF _EXPRESSION ':' END
                      { $$ = new IfElse($2, new StatementList()); }
                 ;
 
-while           : WHILE expression ':' statement_list END
+_WHILE           : WHILE _EXPRESSION ':' _STATEMENT_LIST END
                      { $$ = new While($2, $4); }
-                | WHILE expression ':' END
+                | WHILE _EXPRESSION ':' END
                      { $$ = new While($2, new StatementList()); }
                 ;
 
-return          : RETURN expression
+_RETURN          : RETURN _EXPRESSION
                      { $$ = new Return($2); }
                 ;
 
-parameter_list  : parameter_list ',' IDENT
+_PARAMETER_LIST  : _PARAMETER_LIST ',' IDENT
                      { $1->add($3);
                        $$ = $1;
                        delete [] $3;
@@ -219,7 +231,7 @@ parameter_list  : parameter_list ',' IDENT
                      }
                 ;
 
-expression      : '(' expression ')'
+_EXPRESSION      : '(' _EXPRESSION ')'
                      { $$ = $2; }
                 | INTNUM
                      { $$ = new Constant($1); }
@@ -227,59 +239,60 @@ expression      : '(' expression ')'
                      { $$ = new Constant($1); }
                 | DS IDENT DS
                      { $$ = new Constant(new string($2));}
+                | IDENT '[' INTNUM ']'
+                     { 
+                     }
                 | IDENT
                      { $$ = new Identifier($1);
                        delete [] $1;
                      }
-
-                | expression '+' expression
+                | _EXPRESSION '+' _EXPRESSION
                      { $$ = new Addition($1, $3); }
-                | expression '-' expression
+                | _EXPRESSION '-' _EXPRESSION
                      { $$ = new Subtraction($1, $3); }
-                | expression '*' expression
+                | _EXPRESSION '*' _EXPRESSION
                      { $$ = new Multiplication($1, $3); }
-                | expression '/' expression
+                | _EXPRESSION '/' _EXPRESSION
                      { $$ = new Division($1, $3); }
-                | expression '%' expression
+                | _EXPRESSION '%' _EXPRESSION
                      { $$ = new Modulus($1, $3); }
-                | expression '^' expression
+                | _EXPRESSION '^' _EXPRESSION
                      { $$ = new Exponent($1, $3); }
-                | expression '<' expression
+                | _EXPRESSION '<' _EXPRESSION
                      { $$ = new LessThan($1, $3); }
-                | expression '>' expression
+                | _EXPRESSION '>' _EXPRESSION
                      { $$ = new GreaterThan($1, $3); }
-                | expression LE expression
+                | _EXPRESSION LE _EXPRESSION
                      { $$ = new LessThanOrEqualTo($1, $3); }
-                | expression GE expression
+                | _EXPRESSION GE _EXPRESSION
                      { $$ = new GreaterThanOrEqualTo($1, $3); }
-                | expression EQ expression
+                | _EXPRESSION EQ _EXPRESSION
                      { $$ = new Equals($1, $3); }
-                | expression NE expression
+                | _EXPRESSION NE _EXPRESSION
                      { $$ = new NotEquals($1, $3); }
-                | '-' expression %prec UMINUS
+                | '-' _EXPRESSION %prec UMINUS
                      { $$ = new Negation($2); }
-                | '~' expression %prec UFACTO
+                | '~' _EXPRESSION %prec UFACTO
                      { $$ = new Factorial($2); }
-                | func_call_exp
+                | _FUNC_CALL_EXP
                 ;
 
-func_call_exp   : IDENT '(' expression_list ')'
+_FUNC_CALL_EXP   : IDENT '(' _EXPRESSION_LIST ')'
                      { $$ = new FunctionCallExp($1, $3);
                        delete [] $1;
                      }
                 ;
 
-expression_list : /* empty*/
+_EXPRESSION_LIST : /* empty*/
                      { $$ = new ExpressionList(); }
-                | expression_list ',' expression
+                | _EXPRESSION_LIST ',' _EXPRESSION
                      { $1->add($3);
                        $$ = $1;
                      }
-                | expression
+                | _EXPRESSION
                      { ExpressionList* el = new ExpressionList();
                        el->add($1);
                        $$ = el;
                      }
                 ;
 %%
-

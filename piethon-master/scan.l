@@ -38,6 +38,8 @@ DS    [\"]
 ","         { return yytext[0]; }
 "<"         { return yytext[0]; }
 ">"         { return yytext[0]; }
+"\["         { return LM; }
+"\]"         { return RM; }
 "+="        { return PLUSEQ;    }
 "-="        { return MINUSEQ;   }
 "*="        { return MULTEQ;    }
@@ -52,11 +54,12 @@ DS    [\"]
 "!="        { return NE;        }
 "if"        { return IF;        }
 "else"      { return ELSE;      }
-"def"       { return DEF;       }
 "while"     { return WHILE;     }
 "print"     { return PRINT;     }
 "end"       { return END;       }
 "return"    { return RETURN;    }
+"func"      { return FUNC;      }
+"class"     { return CLASS;     }
 
 
 {DS}        { return DS; }

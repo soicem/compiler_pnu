@@ -10,7 +10,7 @@ using std::string;
 typedef enum Type {
    INT,
    FLOAT,
-   STR,
+   STR
 } Type;
 
 typedef union Value {

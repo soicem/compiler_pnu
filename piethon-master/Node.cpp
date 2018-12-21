@@ -121,8 +121,7 @@ NODE NODE::operator+(const NODE& rhs) const {
       return NODE(value.i + rhs.value.f);
    } else if (type == FLOAT && rhs.type == INT) {
       return NODE(value.f + rhs.value.i);
-   }
-   else {
+   } else {
       throw UnknownType();
    }
 }

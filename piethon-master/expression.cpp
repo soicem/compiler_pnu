@@ -11,6 +11,9 @@ NODE Identifier::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return st[name];
 }
 
+NODE Arrays::eval(const SymbolTable& st, const FunctionTable& ft) const {
+   return st[name];
+}
 Negation::~Negation() {
    delete op;
 }
@@ -79,6 +82,7 @@ NODE Equals::eval(const SymbolTable& st, const FunctionTable& ft) const {
 NODE NotEquals::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) != op2->eval(st, ft);
 }
+
 
 Factorial::~Factorial() {
    delete op;

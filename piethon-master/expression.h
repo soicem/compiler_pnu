@@ -39,11 +39,20 @@ private:
 class Identifier : public Expression {
 public:
    Identifier(const string& n) : name(n) { }
-   
    virtual NODE eval(const SymbolTable&, const FunctionTable&) const;
 
 private:
    string name;
+};
+
+class Arrays : public Expression {
+public:
+    Arrays(const string& n,const int n2) : name(){char* a; name.append(n); itoa(n2,a,10); name.append(a); }
+    virtual NODE eval(const SymbolTable&, const FunctionTable&) const;
+
+private:
+    string name;
+
 };
 
 
