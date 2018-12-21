@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -pedantic
 LEXFLAGS = -Wno-unused -Wno-sign-compare -x c++
 YACCFLAGS = -x c++
 
-PROGRAM = piethon
+PROGRAM = superior
 
 SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o) parse.tab.o lex.yy.o
