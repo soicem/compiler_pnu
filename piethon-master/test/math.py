@@ -1,4 +1,4 @@
-a = 4
+a = 1
 b = 2
 
 x = 1.0
@@ -8,7 +8,6 @@ print a + b
 print a + x
 print x + y
 print -a
-print ~a
 
 z = 8
 z /= 2

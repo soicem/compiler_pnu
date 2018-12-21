@@ -12,7 +12,7 @@ class FunctionTable;
 class ExpressionList;
 class StatementList;
 class FunctionTable;
-class Number;
+class NODE;
 
 class ParameterList {
 public:
@@ -31,8 +31,8 @@ public:
    Function(ParameterList* pList, StatementList* sList) : paramList(pList), stmtList(sList) { }
    ~Function();
    
-   Number apply(const SymbolTable&, const FunctionTable&, ExpressionList*) const;
-   Number apply(const SymbolTable& st, const FunctionTable& ft) const;
+   NODE apply(const SymbolTable&, const FunctionTable&, ExpressionList*) const;
+   NODE apply(const SymbolTable& st, const FunctionTable& ft) const;
 
 private:
    ParameterList* paramList;
