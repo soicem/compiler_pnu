@@ -80,6 +80,17 @@ NODE NotEquals::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) != op2->eval(st, ft);
 }
 
+Factorial::~Factorial() {
+   delete op;
+}
+
+NODE Factorial::eval(const SymbolTable& st, const FunctionTable& ft) const {
+   return ~(op->eval(st, ft));
+}
+
+
+
+
 void ExpressionList::add(Expression* exp) {
    expList.push_back(exp);
 }

@@ -24,6 +24,7 @@ DS    [\"]
 
 "#"[^\r\n]* { /* comments */    }
 [ \t\n]     { /* whitespace */  }
+"~"	        { return yytext[0]; }
 "+"         { return yytext[0]; }
 "-"         { return yytext[0]; }
 "*"         { return yytext[0]; }

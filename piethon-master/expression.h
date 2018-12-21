@@ -197,4 +197,16 @@ private:
    list<Expression*> expList;
 };
 
+class Factorial : public Expression {
+public:
+   Factorial(Expression* e) : op(e) { }
+   ~Factorial();
+
+   virtual NODE eval(const SymbolTable&, const FunctionTable&) const;
+
+private:
+   Expression* op;
+};
+
+
 #endif

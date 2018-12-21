@@ -62,7 +62,8 @@
      RETURN = 279,
      END = 280,
      LOWER_THAN_ELSE = 281,
-     UMINUS = 282
+     UFACTO = 282,
+     UMINUS = 283
    };
 #endif
 
@@ -87,7 +88,7 @@ typedef union YYSTYPE
 
 
 /* Line 1685 of yacc.c  */
-#line 91 "parse.tab.h"
+#line 92 "parse.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
