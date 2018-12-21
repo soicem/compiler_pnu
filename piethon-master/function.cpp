@@ -26,17 +26,17 @@ Function::~Function() {
    delete stmtList;
 }
 
-NODE Function::apply(const SymbolTable& st, const FunctionTable& ft) const {
+Number Function::apply(const SymbolTable& st, const FunctionTable& ft) const {
    // create dummy empty expressionList to pass to no-arg function
    ExpressionList* el = new ExpressionList();
 
    // evaluate the function
-   NODE n = apply(st, ft, el);
+   Number n = apply(st, ft, el);
    delete el;
    return n;
 }
 
-NODE Function::apply(const SymbolTable& st, const FunctionTable& ft, ExpressionList* argList) const {
+Number Function::apply(const SymbolTable& st, const FunctionTable& ft, ExpressionList* argList) const {
 
    // copy existing symbol and function tables into local tables
    SymbolTable localST(st);
@@ -65,5 +65,5 @@ NODE Function::apply(const SymbolTable& st, const FunctionTable& ft, ExpressionL
    }
    
    // else, the function had no return statement. Return default 0.
-   return NODE(0);
+   return Number(0);
 }

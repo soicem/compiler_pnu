@@ -18,12 +18,12 @@ extern void yyerror(const char*, char);
 ident [_a-zA-Z][_0-9a-zA-Z]*
 int   [0-9]+
 float [0-9]*\.[0-9]+
-DS    [\"]
 
 %%
 
 "#"[^\r\n]* { /* comments */    }
 [ \t\n]     { /* whitespace */  }
+"~"	    { return yytext[0]; }
 "+"         { return yytext[0]; }
 "-"         { return yytext[0]; }
 "*"         { return yytext[0]; }
@@ -51,14 +51,12 @@ DS    [\"]
 "!="        { return NE;        }
 "if"        { return IF;        }
 "else"      { return ELSE;      }
-"def"       { return DEF;       }
+"func"      { return FUNC;       }
 "while"     { return WHILE;     }
 "print"     { return PRINT;     }
 "end"       { return END;       }
 "return"    { return RETURN;    }
 
-
-{DS}        { return DS; }
 {ident}  { yylval.ident = new char[strlen(yytext)+1];
            strcpy(yylval.ident, yytext);
            return IDENT;

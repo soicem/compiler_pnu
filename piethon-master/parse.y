@@ -59,10 +59,9 @@ void yyerror(const char* s, char c) {
 %token EQ      "=="
 %token NE      "!="
 %token IF      "if"
-%token DS      "\""
 %token ELSE    "else"
 %token WHILE   "while"
-%token DEF     "def"
+%token FUNC    "func"
 %token PRINT   "print"
 %token RETURN  "return"
 %token END     "end"
@@ -72,7 +71,7 @@ void yyerror(const char* s, char c) {
 %left '<' LE '>' GE EQ NE
 %left '+' '-'
 %left '*' '/' '%' '^'
-%nonassoc UMINUS
+%nonassoc UMINUS UFACTO
 
 %type<exp>       expression
 %type<exp>       func_call_exp
@@ -159,19 +158,19 @@ print           : PRINT expression
                      { $$ = new Print($2); }
                 ;
 
-function_def    : DEF IDENT '(' parameter_list ')' ':' statement_list END
+function_def    : FUNC IDENT '(' parameter_list ')' ':' statement_list END
                      { $$ = new FunctionDef($2, new Function($4, $7));
                        delete [] $2;
                      }
-                | DEF IDENT '(' parameter_list ')' ':' END
+                | FUNC IDENT '(' parameter_list ')' ':' END
                      { $$ = new FunctionDef($2, new Function($4, new StatementList()));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' statement_list END
+                | FUNC IDENT '(' ')' ':' statement_list END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), $6));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' END
+                | FUNC IDENT '(' ')' ':' END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), new StatementList()));
                        delete [] $2;
                      }
@@ -225,13 +224,10 @@ expression      : '(' expression ')'
                      { $$ = new Constant($1); }
                 | FLOATNUM
                      { $$ = new Constant($1); }
-                | DS IDENT DS
-                     { $$ = new Constant(new string($2));}
                 | IDENT
                      { $$ = new Identifier($1);
                        delete [] $1;
                      }
-
                 | expression '+' expression
                      { $$ = new Addition($1, $3); }
                 | expression '-' expression
@@ -258,6 +254,9 @@ expression      : '(' expression ')'
                      { $$ = new NotEquals($1, $3); }
                 | '-' expression %prec UMINUS
                      { $$ = new Negation($2); }
+		
+                | '~' expression %prec UFACTO
+                     { $$ = new Factorial($2); }
                 | func_call_exp
                 ;
 

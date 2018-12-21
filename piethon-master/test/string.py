@@ -1,2 +1,0 @@
-a="wowwowownhello"
-print(a)

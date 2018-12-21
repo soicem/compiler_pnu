@@ -3,11 +3,11 @@
 #include "functionTable.h"
 #include "expression.h"
 
-NODE Constant::eval(const SymbolTable &st, const FunctionTable &ft) const {
-   return content;
+Number Constant::eval(const SymbolTable &st, const FunctionTable &ft) const {
+   return num;
 }
 
-NODE Identifier::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Identifier::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return st[name];
 }
 
@@ -15,15 +15,24 @@ Negation::~Negation() {
    delete op;
 }
 
-NODE Negation::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Negation::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return -(op->eval(st, ft));
+}
+
+
+Factorial::~Factorial() {
+   delete op;
+}
+
+Number Factorial::eval(const SymbolTable& st, const FunctionTable& ft) const {
+   return ~(op->eval(st, ft));
 }
 
 FunctionCallExp::~FunctionCallExp() {
    delete argList;
 }
 
-NODE FunctionCallExp::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number FunctionCallExp::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return ft[name]->apply(st, ft, argList);
 }
 
@@ -32,51 +41,51 @@ BinaryExpression::~BinaryExpression() {
    delete op2;
 }
 
-NODE Addition::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Addition::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) + op2->eval(st, ft);
 }
 
-NODE Subtraction::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Subtraction::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) - op2->eval(st, ft);
 }
 
-NODE Multiplication::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Multiplication::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) * op2->eval(st, ft);
 }
 
-NODE Division::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Division::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) / op2->eval(st, ft);
 }
 
-NODE Modulus::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Modulus::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) % op2->eval(st, ft);
 }
 
-NODE Exponent::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Exponent::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) ^ op2->eval(st, ft);
 }
 
-NODE LessThan::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number LessThan::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) < op2->eval(st, ft);
 }
 
-NODE GreaterThan::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number GreaterThan::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) > op2->eval(st, ft);
 }
 
-NODE LessThanOrEqualTo::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number LessThanOrEqualTo::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) <= op2->eval(st, ft);
 }
 
-NODE GreaterThanOrEqualTo::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number GreaterThanOrEqualTo::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) >= op2->eval(st, ft);
 }
 
-NODE Equals::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number Equals::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) == op2->eval(st, ft);
 }
 
-NODE NotEquals::eval(const SymbolTable& st, const FunctionTable& ft) const {
+Number NotEquals::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return op1->eval(st, ft) != op2->eval(st, ft);
 }
 
