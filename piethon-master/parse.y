@@ -61,7 +61,7 @@ void yyerror(const char* s, char c) {
 %token IF      "if"
 %token ELSE    "else"
 %token WHILE   "while"
-%token DEF     "def"
+%token FUNC    "func"
 %token PRINT   "print"
 %token RETURN  "return"
 %token END     "end"
@@ -158,19 +158,19 @@ print           : PRINT expression
                      { $$ = new Print($2); }
                 ;
 
-function_def    : DEF IDENT '(' parameter_list ')' ':' statement_list END
+function_def    : FUNC IDENT '(' parameter_list ')' ':' statement_list END
                      { $$ = new FunctionDef($2, new Function($4, $7));
                        delete [] $2;
                      }
-                | DEF IDENT '(' parameter_list ')' ':' END
+                | FUNC IDENT '(' parameter_list ')' ':' END
                      { $$ = new FunctionDef($2, new Function($4, new StatementList()));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' statement_list END
+                | FUNC IDENT '(' ')' ':' statement_list END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), $6));
                        delete [] $2;
                      }
-                | DEF IDENT '(' ')' ':' END
+                | FUNC IDENT '(' ')' ':' END
                      { $$ = new FunctionDef($2, new Function(new ParameterList(), new StatementList()));
                        delete [] $2;
                      }

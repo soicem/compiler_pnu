@@ -51,7 +51,7 @@ float [0-9]*\.[0-9]+
 "!="        { return NE;        }
 "if"        { return IF;        }
 "else"      { return ELSE;      }
-"def"       { return DEF;       }
+"func"      { return FUNC;       }
 "while"     { return WHILE;     }
 "print"     { return PRINT;     }
 "end"       { return END;       }
