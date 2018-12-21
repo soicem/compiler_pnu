@@ -120,6 +120,17 @@ private:
 };
 
 
+class Come : public Statement {
+public:
+   Come(string _s) : s(_s) { }
+   ~Come();
+
+   void eval(SymbolTable&, FunctionTable&) const;
+
+private:
+   string s;
+};
+
 class Return: public Statement {
 public:
    Return(Expression* e) : exp(e) { }

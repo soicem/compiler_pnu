@@ -10,6 +10,7 @@
 #include "statement.h"
 
 using std::cout;
+using std::cin;
 using std::cerr;
 using std::endl;
 
@@ -79,6 +80,21 @@ Print::~Print() {
 void Print::eval(SymbolTable& st, FunctionTable& ft) const {
    NODE node(exp->eval(st, ft));
    cout << ">> " << node << endl;
+}
+
+Come::~Come(){
+
+}
+
+void Come::eval(SymbolTable& st, FunctionTable& ft) const {
+   int a;
+   cin >> a;
+   if(st.getCountKey(s) > 0){
+      st[s] = a;
+   } else {
+       cout << "error !" << endl;
+   }
+   cout << st[s] << endl;
 }
 
 Return::~Return() {

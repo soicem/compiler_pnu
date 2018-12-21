@@ -55,6 +55,7 @@ DS    [\"]
 "def"       { return DEF;       }
 "while"     { return WHILE;     }
 "print"     { return PRINT;     }
+"come"	    { return COME;	}
 "end"       { return END;       }
 "return"    { return RETURN;    }
 
