@@ -23,6 +23,7 @@ float [0-9]*\.[0-9]+
 
 "#"[^\r\n]* { /* comments */    }
 [ \t\n]     { /* whitespace */  }
+"~"	    { return yytext[0]; }
 "+"         { return yytext[0]; }
 "-"         { return yytext[0]; }
 "*"         { return yytext[0]; }

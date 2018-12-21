@@ -58,6 +58,19 @@ private:
 };
 
 
+class Factorial : public Expression {
+public:
+   Factorial(Expression* e) : op(e) { }
+   ~Factorial();
+   
+   virtual Number eval(const SymbolTable&, const FunctionTable&) const;
+
+private:
+   Expression* op;
+};
+
+
+
 class FunctionCallExp : public Expression {
 public:
    FunctionCallExp(string n, ExpressionList* aList) : name(n), argList(aList) { }

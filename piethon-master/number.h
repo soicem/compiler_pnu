@@ -47,6 +47,7 @@ public:
    Number  operator%  (const Number&) const;
    Number  operator^  (const Number&) const;
    Number  operator-  () const;
+   Number  operator~  () const;
 
 private:
    Type  type;

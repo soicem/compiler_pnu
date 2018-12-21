@@ -200,3 +200,19 @@ Number Number::operator-() const {
       throw UnknownType();
    }
 }
+Number Number::operator~() const {
+   if (type == INT) {
+      if(value.i <= 0){
+          return Number(0);
+      }
+      else if(value.i > 0){
+          int ret = 1;
+          for(int i = 1; i <= value.i; i++){
+              ret *= i;
+          }
+          return Number(ret);
+      }
+   } else {
+      throw UnknownType();
+   }
+}

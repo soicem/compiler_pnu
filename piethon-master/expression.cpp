@@ -19,6 +19,15 @@ Number Negation::eval(const SymbolTable& st, const FunctionTable& ft) const {
    return -(op->eval(st, ft));
 }
 
+
+Factorial::~Factorial() {
+   delete op;
+}
+
+Number Factorial::eval(const SymbolTable& st, const FunctionTable& ft) const {
+   return ~(op->eval(st, ft));
+}
+
 FunctionCallExp::~FunctionCallExp() {
    delete argList;
 }

@@ -71,7 +71,7 @@ void yyerror(const char* s, char c) {
 %left '<' LE '>' GE EQ NE
 %left '+' '-'
 %left '*' '/' '%' '^'
-%nonassoc UMINUS
+%nonassoc UMINUS UFACTO
 
 %type<exp>       expression
 %type<exp>       func_call_exp
@@ -254,6 +254,9 @@ expression      : '(' expression ')'
                      { $$ = new NotEquals($1, $3); }
                 | '-' expression %prec UMINUS
                      { $$ = new Negation($2); }
+		
+                | '~' expression %prec UFACTO
+                     { $$ = new Factorial($2); }
                 | func_call_exp
                 ;
 
