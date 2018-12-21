@@ -1,5 +1,5 @@
 a = 1
-b = 2
+b = 5
 
 x = 1.0
 y = 2.0
@@ -8,6 +8,7 @@ print a + b
 print a + x
 print x + y
 print -a
+print (~b)
 
 z = 8
 z /= 2

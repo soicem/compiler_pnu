@@ -55,6 +55,7 @@ public:
    NODE  operator%  (const NODE&) const;
    NODE  operator^  (const NODE&) const;
    NODE  operator-  () const;
+   NODE  operator~  () const;
 
 private:
    Type  type;
