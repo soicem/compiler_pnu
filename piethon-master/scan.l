@@ -38,6 +38,7 @@ DS    [\"]
 ","         { return yytext[0]; }
 "<"         { return yytext[0]; }
 ">"         { return yytext[0]; }
+".."        { return DOTDOT;    }
 "+="        { return PLUSEQ;    }
 "-="        { return MINUSEQ;   }
 "*="        { return MULTEQ;    }
@@ -54,11 +55,12 @@ DS    [\"]
 "else"      { return ELSE;      }
 "def"       { return DEF;       }
 "while"     { return WHILE;     }
+"for"	    { return FOR;	}
 "print"     { return PRINT;     }
 "come"	    { return COME;	}
 "end"       { return END;       }
 "return"    { return RETURN;    }
-
+"in"        { return IN;        }
 
 {DS}        { return DS; }
 {ident}  { yylval.ident = new char[strlen(yytext)+1];

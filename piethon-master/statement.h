@@ -3,7 +3,6 @@
 
 #include <string>
 #include <list>
-
 using std::string;
 using std::list;
 
@@ -106,6 +105,22 @@ private:
    Expression*    condition;
    StatementList* stmtList;
 };
+
+
+class For : public Statement {
+public:
+   For(string x, int start, int finish, StatementList* sList) : nameOfX(x), startIdx(start), finishIdx(finish), stmtList(sList){}
+   ~For();
+
+   void eval(SymbolTable&, FunctionTable&) const;
+
+private:
+   string nameOfX;
+   int startIdx;
+   int finishIdx;
+   StatementList* stmtList;
+};
+
 
 
 class Print : public Statement {
