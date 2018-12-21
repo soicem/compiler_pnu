@@ -53,7 +53,7 @@ DS    [\"]
 "!="        { return NE;        }
 "if"        { return IF;        }
 "else"      { return ELSE;      }
-"def"       { return DEF;       }
+"func"       { return FUNC;       }
 "while"     { return WHILE;     }
 "for"	    { return FOR;	}
 "print"     { return PRINT;     }
